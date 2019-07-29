@@ -71,6 +71,48 @@ typedef NS_ENUM(NSInteger, JTCalendarPageMode) {
         
         _scrollView.clipsToBounds = NO;
     }
+    //自定义，添加左右按钮
+    {
+        CGSize viewSize = self.frame.size;
+        CGFloat buttonHeightScale = 0.6;
+        CGFloat buttonWidthHeightScale = 0.56;
+        CGFloat button_Height = buttonHeightScale * viewSize.height;
+        CGFloat button_Width = viewSize.width * 0.1;
+        CGFloat horiSpace = 0;
+        CGFloat leftButton_x = horiSpace;
+        CGFloat rightButton_x = viewSize.width - button_Width - horiSpace;
+        CGFloat button_y = (viewSize.height - button_Height) * 0.5;
+        UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [leftBtn setImage:[UIImage imageNamed:@"icon_left"] forState:UIControlStateNormal];
+        leftBtn.frame = CGRectMake(leftButton_x, button_y, button_Width, button_Height);
+        leftBtn.imageView.contentMode = UIViewContentModeScaleAspectFit;
+        [leftBtn addTarget:self action:@selector(showPreviousMonth) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:leftBtn];
+        UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [rightBtn setImage:[UIImage imageNamed:@"icon_right"] forState:UIControlStateNormal];
+        rightBtn.frame = CGRectMake(rightButton_x, button_y, button_Width, button_Height);
+        [rightBtn addTarget:self action:@selector(showNextMonth) forControlEvents:UIControlEventTouchUpInside];
+
+        [self addSubview:rightBtn];
+
+    }
+}
+
+- (void)showPreviousMonth
+{
+//    NSDate *currentDate = [_manager date];
+//    NSDate *previousDate = [_manager.dateHelper addToDate:currentDate months:-1];
+//     [_manager setDate:previousDate];
+    _manager.contentView.contentOffset = CGPointMake(0, 0);
+//    [_manager.contentView layoutSubviews];111
+}
+- (void)showNextMonth
+{
+//    NSDate *currentDate = [_manager date];
+//    NSDate *nextDate = [_manager.dateHelper addToDate:currentDate months:1];
+//    [_manager setDate:nextDate];
+    _manager.contentView.contentOffset = CGPointMake(_manager.contentView.frame.size.width * 2, 0);
+//    [_manager.contentView layoutSubviews];
 }
 
 - (void)layoutSubviews
@@ -105,6 +147,7 @@ typedef NS_ENUM(NSInteger, JTCalendarPageMode) {
         _leftView.frame = CGRectMake(_leftView.frame.origin.x, 0, _scrollView.frame.size.width, size.height);
         _centerView.frame = CGRectMake(_centerView.frame.origin.x, 0, _scrollView.frame.size.width, size.height);
         _rightView.frame = CGRectMake(_rightView.frame.origin.x, 0, _scrollView.frame.size.width, size.height);
+ 
     }
 }
 
@@ -131,7 +174,8 @@ typedef NS_ENUM(NSInteger, JTCalendarPageMode) {
             _leftView.frame = CGRectMake(0, 0, size.width, size.height);
             _centerView.frame = CGRectMake(size.width, 0, size.width, size.height);
             _rightView.frame = CGRectMake(size.width * 2, 0, size.width, size.height);
-            
+            ((UILabel *)_centerView ).font = [UIFont systemFontOfSize:size.height * 0.4];
+
             _scrollView.contentOffset = CGPointMake(size.width, 0);
             break;
         case JTCalendarPageModeCenter:

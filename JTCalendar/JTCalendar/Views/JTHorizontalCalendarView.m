@@ -36,8 +36,7 @@ typedef NS_ENUM(NSInteger, JTCalendarPageMode) {
     if(!self){
         return nil;
     }
-    
-    [self commonInit];
+     [self commonInit];
     
     return self;
 }

@@ -75,7 +75,20 @@
             days = [[dateFormatter standaloneWeekdaySymbols] mutableCopy];
             break;
     }
-    
+    NSArray *arr = [[NSUserDefaults standardUserDefaults] objectForKey:@"AppleLanguages"];
+    NSString *languageName = arr.firstObject;
+    if ([languageName containsString:@"zh-Han"])
+    {
+        [days removeAllObjects];
+        [days addObject:@"日"];
+        [days addObject:@"一"];
+        [days addObject:@"二"];
+        [days addObject:@"三"];
+        [days addObject:@"四"];
+        [days addObject:@"五"];
+        [days addObject:@"六"];
+    }
+
     for(NSInteger i = 0; i < days.count; ++i){
         NSString *day = days[i];
         [days replaceObjectAtIndex:i withObject:[day uppercaseString]];
@@ -111,9 +124,10 @@
     CGFloat dayWidth = self.frame.size.width / NUMBER_OF_DAY_BY_WEEK;
     CGFloat dayHeight = self.frame.size.height;
     
-    for(UIView *dayView in _dayViews){
+    for(UILabel *dayView in _dayViews){
         dayView.frame = CGRectMake(x, 0, ceil(dayWidth), ceil(dayHeight));
         x += dayWidth;
+        dayView.font = [UIFont systemFontOfSize:dayWidth * 0.3];
     }
 }
 

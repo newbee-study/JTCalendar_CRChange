@@ -45,7 +45,7 @@
 - (NSDateFormatter *)createDateFormatter
 {
     NSDateFormatter *dateFormatter = [NSDateFormatter new];
-    
+    dateFormatter.dateFormat = @"yyyy年MM月";
     dateFormatter.timeZone = self.calendar.timeZone;
     dateFormatter.locale = self.calendar.locale;
     
